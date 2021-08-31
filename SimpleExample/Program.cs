@@ -51,13 +51,14 @@ namespace SimpleExample
             {
                 var result = chroms.OrderByDescending(s => problem.Fit(s.Gene))
                 .Take(chroms.Count() / 2);
-                return result.Select((v, i) =>
+
+                return result.SkipLast(1).Select((v, i) =>
                     new
                     {
                         Current = v,
-                        Next = (result.Count() > i)
-                    ? result.ElementAt(i) : result.First()
+                        Next = result.Skip(i+1).First()
                     })
+                .Append(new {Current=result.First(), Next=result.Last() })
                 .SelectMany(v =>
                 new List<Chromosome>()
                 { v.Current,
