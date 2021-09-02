@@ -55,19 +55,19 @@
                                 <StackPanel>
                                     <TextBlock x:Name="headerText_Copy" Text="Iterations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
                                     <StackPanel Orientation="Horizontal">
-                                        <Slider x:Name="IterationsCount" Minimum="1" Maximum="500" Value="{Binding Iterations}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
+                                        <Slider x:Name="IterationsCount" Minimum="1" Maximum="1000" Value="{Binding Iterations}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
                                         <TextBox x:Name="textBlock1" MinWidth="80" MaxWidth="80" Text="{Binding Value, ElementName=IterationsCount}" Padding="8,0,4,4" Background="#FFFFFDFD" Margin="3,0,0,0"/>
                                     </StackPanel>
 
                                     <TextBlock x:Name="headerText_Copy1" Text="Rounds Per Iteration" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
                                     <StackPanel Orientation="Horizontal">
-                                        <Slider x:Name="RoundsPerIteration" Minimum="10" Maximum="1000" Value="{Binding RoundsPerIteration}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
+                                        <Slider x:Name="RoundsPerIteration" Minimum="10" Maximum="9999999" Value="{Binding RoundsPerIteration}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
                                         <TextBox x:Name="textBlock2" MinWidth="80" MaxWidth="80" Text="{Binding Value, ElementName=RoundsPerIteration}" Padding="8,0,4,4" Background="#FFFFFDFD" Margin="3,0,0,0"/>
                                     </StackPanel>
 
                                     <TextBlock Text="Population Size" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
                                     <StackPanel Orientation="Horizontal">
-                                        <Slider x:Name="PopulationSize" Minimum="10" Maximum="1500" Value="{Binding PopulationSize}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
+                                        <Slider x:Name="PopulationSize" Minimum="10" Maximum="10000" Value="{Binding PopulationSize}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
                                         <TextBox MinWidth="80" MaxWidth="80" Text="{Binding Value, ElementName=PopulationSize}" Padding="8,0,4,4" Background="#FFFFFDFD" Margin="3,0,0,0"/>
                                     </StackPanel>
 

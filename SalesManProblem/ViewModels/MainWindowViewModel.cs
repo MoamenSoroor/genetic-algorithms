@@ -17,12 +17,12 @@ namespace SalesManProblem.ViewModels
     {
         private readonly Randomizer randomizer;
         private int citiesCount = 32;
-        private int iterations = 20;
-        private int roundsPerIteration = 100;
-        private int populationSize = 300;
-        private double crossoverPercentage = 20;
-        private double mutationPercentage = 80;
-        private double elitismPercentage = 80;
+        private int iterations = 50;
+        private int roundsPerIteration = 1000;
+        private int populationSize = 1500;
+        private double crossoverPercentage = 50;
+        private double mutationPercentage = 25;
+        private double elitismPercentage = 40;
         private List<City> cities;
         private string pathLengthString;
         private string avgPathLengthString;
@@ -140,8 +140,8 @@ namespace SalesManProblem.ViewModels
         {
             //return randomizer.RandomUniqueSequence(citiesCount, (int)mapWidth)
             //    .Zip(randomizer.RandomUniqueSequence(citiesCount, (int)mapHeight))
-            return randomizer.RandomUniqueSequenceWithSpaces(citiesCount, (int)mapWidth,20)
-                .Zip(randomizer.RandomUniqueSequenceWithSpaces(citiesCount, (int)mapHeight,20))
+            return randomizer.RandomSequence(citiesCount, 10, mapWidth, 20)
+                .Zip(randomizer.RandomSequence(citiesCount, 10, mapHeight, 20))
                 .Select((pair, i) => new City($"{i + 1}", new System.Drawing.Point(pair.First, pair.Second)))
                 .ToList();
         }

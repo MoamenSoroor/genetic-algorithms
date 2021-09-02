@@ -39,14 +39,14 @@ namespace SalesManProblem.Views
 
 
 
-        private Polyline path = new Polyline();
+        private Polygon path = new Polygon();
         private List<City> cities;
 
         private void HandlePath(object recipient, MapPath message)
         {
             Map.Children.Clear();
 
-            Polyline path = new Polyline();
+            Polygon path = new Polygon();
             path.Stroke = Brushes.Black;
             path.StrokeThickness = 2;
             path.StrokeEndLineCap = PenLineCap.Round;
