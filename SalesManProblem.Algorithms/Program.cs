@@ -12,9 +12,19 @@ namespace SalesManProblem.Algorithms
     class Program
     {
 
-        static int Main(string[] args)
+        static void Main(string[] args)
         {
-            return 0;
+            Map map = Map.Create(new[] {
+                new City("c1",new Point(20,30)),
+            new City("c2",new Point(50,10)),
+            new City("c3",new Point(70,20)),
+            new City("c4",new Point(20,100)),
+            });
+
+            Console.WriteLine(MapPath.CreateRandom(map).PathLength);
+
+
+
         }
 
         //static void Main(string[] args)

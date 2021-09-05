@@ -11,34 +11,6 @@ using SalesManProblem.Algorithms.Utils;
 
 namespace SalesManProblem.Algorithms.GNA
 {
-    public class GNAChoices
-    {
-        public GNAChoices(FitnessChoice fitnessChoice, ElitismChoice elitismChoice, SelectionChoice selectionChoice, CrossOverChoice crossoverChoice, MutationChoice mutationChoice)
-        {
-            //InitGenerationChoice = initGenerationChoice;
-            FitnessChoice = fitnessChoice;
-            ElitismChoice = elitismChoice;
-            SelectionChoice = selectionChoice;
-            CrossOverChoice = crossoverChoice;
-            MutationChoice = mutationChoice;
-        }
-
-        public GNAChoices()
-        {
-
-        }
-
-        //public InitGenerationChoice InitGenerationChoice { get; init; }
-        public FitnessChoice FitnessChoice { get; init; }
-        public ElitismChoice ElitismChoice { get; init; }
-        public SelectionChoice SelectionChoice { get; init; }
-        public CrossOverChoice CrossOverChoice { get; init; }
-        public MutationChoice MutationChoice { get; init; }
-
-
-
-
-    }
 
 
     public class GNAConfigurations
@@ -154,7 +126,7 @@ namespace SalesManProblem.Algorithms.GNA
         public static ImmutableList<Candidate> InitialPopulation(Map map, GNAOptions options)
         {
             return Enumerable.Range(1, options.PopulationSize)
-                .Select(v => Candidate.Create(MapPath.Create(map))).ToImmutableList();
+                .Select(v => Candidate.Create(MapPath.CreateRandom(map))).ToImmutableList();
         }
 
         #endregion
@@ -399,38 +371,6 @@ namespace SalesManProblem.Algorithms.GNA
     }
 
 
-    public enum InitGenerationChoice
-    {
-        Default
-    }
-
-
-    public enum FitnessChoice
-    {
-        Default,
-        Fitness2
-    }
-
-    public enum ElitismChoice
-    {
-        Default
-    }
-
-    public enum SelectionChoice
-    {
-        Default, // RouletteWheelSelection
-        RandomSelection
-    }
-
-    public enum CrossOverChoice
-    {
-        Default
-    }
-
-    public enum MutationChoice
-    {
-        Default
-    }
 
 
 
