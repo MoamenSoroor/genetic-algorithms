@@ -104,23 +104,23 @@
                             <GroupBox x:Name="groupBox3" Header="Configure Genetic Algorithm" FontSize="16">
                                 <StackPanel>
                                     <TextBlock x:Name="headerText_Copy2" Text="Init GNA Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
-                                    <ComboBox Background="WhiteSmoke" ItemsSource="{Binding InitGNAConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
+                                    <ComboBox Background="WhiteSmoke" SelectedItem="{Binding SelectedInitGenerationChoice}"  ItemsSource="{Binding InitGNAConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
 
                                     <TextBlock x:Name="FitnessConfig" Text="Fitness Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
-                                    <ComboBox Background="WhiteSmoke" ItemsSource="{Binding FitnessConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
+                                    <ComboBox Background="WhiteSmoke" SelectedItem="{Binding SelectedFitnessChoice}" ItemsSource="{Binding FitnessConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
 
                                     <TextBlock x:Name="ElitismConfig" Text="Elitism Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
-                                    <ComboBox Background="WhiteSmoke" ItemsSource="{Binding ElitismConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
+                                    <ComboBox Background="WhiteSmoke" SelectedItem="{Binding SelectedElitismChoice}" ItemsSource="{Binding ElitismConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
 
                                     <TextBlock x:Name="SelectionConfig" Text="Selection Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
-                                    <ComboBox Background="WhiteSmoke" ItemsSource="{Binding SelectionConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
+                                    <ComboBox Background="WhiteSmoke" SelectedItem="{Binding SelectedSelectionChoice}" ItemsSource="{Binding SelectionConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
 
                                     <TextBlock x:Name="CrossOverConfig" Text="CrossOver Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
-                                    <ComboBox Background="WhiteSmoke" ItemsSource="{Binding CrossOverConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
+                                    <ComboBox Background="WhiteSmoke" SelectedItem="{Binding SelectedCrossOverChoice}" ItemsSource="{Binding CrossOverConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
 
 
                                     <TextBlock x:Name="MutationConfig" Text="Mutation Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
-                                    <ComboBox Background="WhiteSmoke" ItemsSource="{Binding MutationConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
+                                    <ComboBox Background="WhiteSmoke" SelectedItem="{Binding SelectedMutaionChoice}" ItemsSource="{Binding MutationConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
 
                                 </StackPanel>
                             </GroupBox>
@@ -157,7 +157,7 @@
                     </TabItem>
                     <TabItem Header="Logs And Errors" Padding="10,4,10,4">
                         <Grid Background="#FFE5E5E5">
-                            <TextBox x:Name="textBox" Background="White" Padding="4,4,4,4" IsReadOnly="True"/>
+                            <TextBox x:Name="textBox" Text="{Binding Logs}" Background="White" Padding="4,4,4,4" IsReadOnly="True"/>
                         </Grid>
                     </TabItem>
                 </TabControl>

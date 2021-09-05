@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using SalesManProblem.Algorithms.Algorithms.GNA;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -124,10 +125,14 @@ namespace SalesManProblem.Algorithms
         }
 
 
+        public static Map Create(IEnumerable<City> cities)
+        {
+            Guard.Against.NullOrEmpty(cities, nameof(cities), "cities  passed can't be null or empty");
+            return new Map(cities);
+        }
+
         public Map(IEnumerable<City> _cities)
         {
-            Guard.Against.NullOrEmpty(cities, nameof(_cities), "cities  passed can't be null or empty");
-
             this.cities = _cities.ToHashSet();
         }
         private HashSet<City> cities = new HashSet<City>();
@@ -141,9 +146,9 @@ namespace SalesManProblem.Algorithms
             return isexist ? mycity : City.Null;
         }
 
-        public ImmutableList<Point> GetAllPositions(Point position)
+        public IReadOnlyList<Point> GetAllPositions()
         {
-            return this.cities.Select(c => c.Position).ToImmutableList();
+            return this.cities.Select(c => c.Position).ToList();
         }
 
 
@@ -208,13 +213,86 @@ namespace SalesManProblem.Algorithms
     public class MapPath
     {
 
-        public MapPath(MapPath path)
+        /// <summary>
+        /// create map path from another one (shallow copy)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>new path</returns>
+        public static MapPath Create(MapPath path)
         {
-            this.positions = path.positions.ToImmutableList();
+            return new MapPath(path);
+        }
+
+        /// <summary>
+        /// create random path from the cities on the map (deep copy)
+        /// </summary>
+        /// <param name="map">the map that has the city positions</param>
+        /// <param name="randomizer">the randomizer that is used to generate random path</param>
+        /// <returns>new path with random positions</returns>
+        public static MapPath Create(Map map)
+        {
+            var positions = map.GetAllPositions();
+            var path = new MapPath(RandomGenerator.RandomUniqueSequence(positions.Count, positions.Count)
+                .Select(index => positions[index]).ToImmutableList());
+
+            return path;
+        }
+
+        /// <summary>
+        /// create path from city positions directly with out map (deep copy)
+        /// </summary>
+        /// <param name="positions"></param>
+        /// <returns></returns>
+        public static MapPath Create(ImmutableList<Point> positions)
+        {
+            return new MapPath(positions);
+        }
+
+        /// <summary>
+        /// create new path after applying swaps on the city positions (deep copy)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="swaps"></param>
+        /// <returns></returns>
+        public static MapPath Create(MapPath path, ImmutableList<(int Index, int NewIndex)> swaps)
+        {
+            var list = new List<Point>(path.Positions);
+
+            swaps.ForEach(pair =>
+            {
+                var temp = list[pair.Index];
+                list[pair.Index] = list[pair.NewIndex];
+                list[pair.NewIndex] = temp;
+            });
+
+            return MapPath.Create(MapPath.Create(list.ToImmutableList()));
+        }
+
+        /// <summary>
+        /// create new map path after applying swap on two positions (deep copy)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="index"></param>
+        /// <param name="newIndex"></param>
+        /// <returns></returns>
+        public static MapPath Create(MapPath path, int index, int newIndex)
+        {
+            var list = new List<Point>(path.Positions);
+            var temp = list[index];
+            list[index] = list[newIndex];
+            list[newIndex] = temp;
+            return MapPath.Create(MapPath.Create(list.ToImmutableList()));
+        }
+
+
+
+        private MapPath(MapPath path)
+        {
+            this.positions = path.positions;
             pathLength = path.pathLength;
         }
 
-        public MapPath(ImmutableList<Point> positions)
+        private MapPath(ImmutableList<Point> positions)
         {
             this.positions = positions;
             this.pathLength = CalculatePathLength();

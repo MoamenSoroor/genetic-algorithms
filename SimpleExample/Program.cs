@@ -2,13 +2,54 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace SimpleExample
 {
     class Program
     {
-        static void Main(string[] args)
+
+        
+
+        static async Task Main(string[] args)
         {
+
+            await TestRandomGenerator();
+            //
+            //Run();
+
+        }
+
+        static async Task TestRandomGenerator()
+        {
+            try
+            {
+
+                //var tasks = Enumerable.Range(0, 100_000)
+                //    .Select(value => Task.Run(() =>RandomNumberGenerator.GetInt32(int.MaxValue)))
+                //    .ToList();
+
+
+                var tasks = Enumerable.Range(0, 100)
+                    .Select(value => Task.Run(() => RandomGenerator.NextDouble()))
+                    .ToList();
+
+
+                var data = await Task.WhenAll(tasks);
+                Console.WriteLine(string.Join(Environment.NewLine, data));
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+
+        static void Run()
+        {
+
             // y = w1*x1 + w2 * x2 + w3 * x3 + w4 * x4 + w5 * x5 + w6 * x6
             // y = 4 * w1 - 2 * w2 + 7 * w3 + 5 * w4 + 11 * w5 + w6
             // y = 44.1
@@ -29,18 +70,18 @@ namespace SimpleExample
                 new Chromosome( new double []{ -2, 3, -7, 6, 3, 3}),
             };
 
-            var result = Solve(20,problem, chromos);
+            var result = Solve(20, problem, chromos);
 
             var txt = string.Join(
                 Environment.NewLine,
-                result.Select(r => 
+                result.Select(r =>
                     $"Error: {problem.Error(r.Gene):10}, Chromo: {string.Join(", ", r.Gene)}"));
 
 
 
             Console.WriteLine(txt);
-
         }
+
 
         static IEnumerable<Chromosome> Solve(int iterations, ProblemSample problem, IEnumerable<Chromosome> chromosomes)
         {

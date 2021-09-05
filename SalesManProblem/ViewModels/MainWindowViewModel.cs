@@ -5,6 +5,7 @@ using SalesManProblem.Algorithms;
 using SalesManProblem.Algorithms.Algorithms.GNA;
 using SalesManProblem.Algorithms.GNA;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -15,10 +16,9 @@ namespace SalesManProblem.ViewModels
 {
     public class MainWindowViewModel : ObservableRecipient
     {
-        private readonly Randomizer randomizer;
         private int citiesCount = 32;
-        private int iterations = 50;
-        private int roundsPerIteration = 1000;
+        private int iterations = 2;
+        private int roundsPerIteration = 500;
         private int populationSize = 1500;
         private double crossoverPercentage = 50;
         private double mutationPercentage = 25;
@@ -31,13 +31,11 @@ namespace SalesManProblem.ViewModels
         private int mapWidth;
         private int mapHeight;
 
-        public MainWindowViewModel(Randomizer randomizer)
+        public MainWindowViewModel()
         {
             GenerateRandomCities = new RelayCommand(GenerateRandomCitiesMethod);
             RunGNAlgorithm = new AsyncRelayCommand(RunAlgorithmAsync);
             GenerateCircularCities = new RelayCommand(PerformGenerateCircularCities);
-            this.randomizer = randomizer;
-
         }
 
 
@@ -51,7 +49,7 @@ namespace SalesManProblem.ViewModels
         public List<City> Cities { get => cities; set => SetProperty(ref cities, value); }
         public int MapWidth { get => mapWidth; set => mapWidth = value; }
         public int MapHeight { get => mapHeight; set => mapHeight = value; }
-        
+
 
         public IRelayCommand GenerateRandomCities { get; }
 
@@ -63,53 +61,74 @@ namespace SalesManProblem.ViewModels
 
         public string AvgPathLengthString { get => avgPathLengthString; set => SetProperty(ref avgPathLengthString, value); }
 
-        private System.Collections.IEnumerable initGNAConfigurations;
 
-        public System.Collections.IEnumerable InitGNAConfigurations { get => initGNAConfigurations; set => SetProperty(ref initGNAConfigurations, value); }
+        private string logs = "reports here";
 
-        private System.Collections.IEnumerable fitnessConfigurations;
-
-        public System.Collections.IEnumerable FitnessConfigurations { get => fitnessConfigurations; set => SetProperty(ref fitnessConfigurations, value); }
-
-        private System.Collections.IEnumerable elitismConfigurations;
-
-        public System.Collections.IEnumerable ElitismConfigurations { get => elitismConfigurations; set => SetProperty(ref elitismConfigurations, value); }
-
-        private System.Collections.IEnumerable crossOverConfigurations;
-
-        public System.Collections.IEnumerable CrossOverConfigurations { get => crossOverConfigurations; set => SetProperty(ref crossOverConfigurations, value); }
-
-        private System.Collections.IEnumerable mutationConfigurations;
-
-        public System.Collections.IEnumerable MutationConfigurations { get => mutationConfigurations; set => SetProperty(ref mutationConfigurations, value); }
+        public string Logs { get => logs; set => SetProperty(ref logs, value); }
 
 
+        public List<InitGenerationChoice> InitGNAConfigurations { get => Enum.GetValues(typeof(InitGenerationChoice)).Cast<InitGenerationChoice>().ToList(); }
 
 
+        public List<FitnessChoice>  FitnessConfigurations { get => Enum.GetValues(typeof(FitnessChoice)).Cast<FitnessChoice>().ToList(); }
+
+
+        public List<ElitismChoice> ElitismConfigurations { get => Enum.GetValues(typeof(ElitismChoice)).Cast<ElitismChoice>().ToList(); }
+
+
+        public List<CrossOverChoice> CrossOverConfigurations { get => Enum.GetValues(typeof(CrossOverChoice)).Cast<CrossOverChoice>().ToList(); }
+
+
+        public List<MutationChoice> MutationConfigurations { get => Enum.GetValues(typeof(MutationChoice)).Cast<MutationChoice>().ToList(); }
+        
+        public List<SelectionChoice> SelectionConfigurations { get => Enum.GetValues(typeof(SelectionChoice)).Cast<SelectionChoice>().ToList(); }
+
+        public InitGenerationChoice SelectedInitGenerationChoice { get; set; } = InitGenerationChoice.Default;
+        public FitnessChoice SelectedFitnessChoice { get; set; } = FitnessChoice.Default;
+        public SelectionChoice SelectedSelectionChoice { get; set; } = SelectionChoice.Default;
+        public ElitismChoice SelectedElitismChoice { get; set; } = ElitismChoice.Default;
+        public CrossOverChoice SelectedCrossOverChoice { get; set; } = CrossOverChoice.Default;
+        public MutationChoice SelectedMutaionChoice { get; set; } = MutationChoice.Default;
 
 
         private async Task RunAlgorithmAsync()
         {
-            var pars = new GNAParameters(iterations,
+            var options = new GNAOptions(iterations,
                 populationSize,
                 crossoverPercentage / 100D,
                 mutationPercentage / 100D,
                 elitismPercentage / 100D,
-                cities.Select(c => c.Position).ToImmutableList(),
-                randomizer,
                 roundsPerIteration
                 );
-            GNAlgorithm algorithm = new GNAlgorithm(pars);
+            var choices = new GNAChoices(SelectedFitnessChoice, SelectedElitismChoice, SelectedSelectionChoice, SelectedCrossOverChoice, SelectedMutaionChoice);
+            GNAlgorithm algorithm = new GNAlgorithm(choices, options);
             AvgPathLengthString = $"wait ...";
             PathLengthString = $"";
-            var results = await Task.Run(() => algorithm.Execute());
+            var results = await Task.Run(() => algorithm.Execute(Map.Create(Cities)));
             AvgPathLengthString = $"Avg Path Length: {results.AveragePathLength}";
             PathLengthString = $"Best Path Length: {(int)results.MapPath.PathLength}";
+
+  
+            LogInfo(results);
 
             WeakReferenceMessenger.Default.Send(results.MapPath);
 
         }
 
+        public void LogInfo(GNAResult results)
+        {
+            string logstr = $@"Algorihm Results.
+--------------------------------------------------------
+Best Path Length-----------:{results.MapPath.PathLength}
+Average Path Length--------:{results.AveragePathLength}
+Best Execution Time--------:{results.IterationElapsed}
+Total Execution Time-------:{results.TotalElapsed}
+Path-----------------------:
+{string.Join($"        {Environment.NewLine}", results.MapPath.Positions.Select(p => $"{Cities.FirstOrDefault(c => c.Position == p).Name ?? "C"}:({p.X} , {p.Y})"))}
+
+";
+            Logs = logstr;
+        }
 
         private void PerformGenerateCircularCities()
         {
@@ -118,11 +137,11 @@ namespace SalesManProblem.ViewModels
             int centerY = MapHeight / 2;
             double step = (2 * Math.PI) / citiesCount;
 
-            var points = Enumerable.Range(0,citiesCount)
+            var points = Enumerable.Range(0, citiesCount)
                 .Select((v, i) =>
                 {
-                    int x = centerX + (int)(Math.Cos(i * step)*radius);
-                    int y = centerY + (int)(Math.Sin(i * step)*radius);
+                    int x = centerX + (int)(Math.Cos(i * step) * radius);
+                    int y = centerY + (int)(Math.Sin(i * step) * radius);
                     return new City($"{i + 1}", new System.Drawing.Point(x, y));
                 }).ToList();
             Cities = points;
@@ -138,13 +157,13 @@ namespace SalesManProblem.ViewModels
 
         public List<City> GenerateRandomPoints()
         {
-            //return randomizer.RandomUniqueSequence(citiesCount, (int)mapWidth)
-            //    .Zip(randomizer.RandomUniqueSequence(citiesCount, (int)mapHeight))
-            return randomizer.RandomSequence(citiesCount, 10, mapWidth, 20)
-                .Zip(randomizer.RandomSequence(citiesCount, 10, mapHeight, 20))
+            return RandomGenerator.RandomSequence(citiesCount, 10, mapWidth, 20)
+                .Zip(RandomGenerator.RandomSequence(citiesCount, 10, mapHeight, 20))
                 .Select((pair, i) => new City($"{i + 1}", new System.Drawing.Point(pair.First, pair.Second)))
                 .ToList();
         }
+
+
 
 
     }
