@@ -1,4 +1,4 @@
-# genetic-algorithms
+# genetic-algorithm
 Genetic algorithms exploration.
 
 Applying Functional Progamming Prinicples, Parallel Progamming on Genetic Algorithm
