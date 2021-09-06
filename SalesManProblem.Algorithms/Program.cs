@@ -14,16 +14,14 @@ namespace SalesManProblem.Algorithms
 
         static void Main(string[] args)
         {
-            Map map = Map.Create(new[] {
-                new City("c1",new Point(20,30)),
-            new City("c2",new Point(50,10)),
-            new City("c3",new Point(70,20)),
-            new City("c4",new Point(20,100)),
-            });
+            //Map map = Map.Create(new[] {
+            //    new City("c1",new Point(20,30)),
+            //new City("c2",new Point(50,10)),
+            //new City("c3",new Point(70,20)),
+            //new City("c4",new Point(20,100)),
+            //});
 
-            Console.WriteLine(MapPath.CreateRandom(map).PathLength);
-
-
+            //Console.WriteLine(MapPath.CreateRandom(map).PathLength);
 
         }
 

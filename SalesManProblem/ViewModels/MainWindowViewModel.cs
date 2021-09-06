@@ -3,6 +3,7 @@ using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using SalesManProblem.Algorithms;
 using SalesManProblem.Algorithms.Algorithms.GNA;
+using SalesManProblem.Algorithms.Configurations;
 using SalesManProblem.Algorithms.GNA;
 using System;
 using System.Collections;
@@ -18,7 +19,7 @@ namespace SalesManProblem.ViewModels
     {
         private int citiesCount = 32;
         private int iterations = 2;
-        private int roundsPerIteration = 500;
+        private int numberOfGenerationsPerIeration = 500;
         private int populationSize = 1500;
         private double crossoverPercentage = 50;
         private double mutationPercentage = 25;
@@ -27,7 +28,7 @@ namespace SalesManProblem.ViewModels
         private string pathLengthString;
         private string avgPathLengthString;
 
-        // set from window
+        // set from Canvas
         private int mapWidth;
         private int mapHeight;
 
@@ -36,11 +37,17 @@ namespace SalesManProblem.ViewModels
             GenerateRandomCities = new RelayCommand(GenerateRandomCitiesMethod);
             RunGNAlgorithm = new AsyncRelayCommand(RunAlgorithmAsync);
             GenerateCircularCities = new RelayCommand(PerformGenerateCircularCities);
+
+            LoadedCommand = new RelayCommand(WindowLoadedHandler);
         }
 
+        private void WindowLoadedHandler()
+        {
+            GenerateRandomCitiesMethod();
+        }
 
         public int Iterations { get => iterations; set => SetProperty(ref iterations, value); }
-        public int RoundsPerIteration { get => roundsPerIteration; set => SetProperty(ref roundsPerIteration, value); }
+        public int NumberOfGenerationsPerIeration { get => numberOfGenerationsPerIeration; set => SetProperty(ref numberOfGenerationsPerIeration, value); }
         public int PopulationSize { get => populationSize; set => SetProperty(ref populationSize, value); }
         public double CrossoverPercentage { get => crossoverPercentage; set => SetProperty(ref crossoverPercentage, value); }
         public double MutationPercentage { get => mutationPercentage; set => SetProperty(ref mutationPercentage, value); }
@@ -56,6 +63,9 @@ namespace SalesManProblem.ViewModels
         public IAsyncRelayCommand RunGNAlgorithm { get; }
 
         public IRelayCommand GenerateCircularCities { get; }
+
+
+        public IRelayCommand LoadedCommand { get; }
 
         public string PathLengthString { get => pathLengthString; set => SetProperty(ref pathLengthString, value); }
 
@@ -98,7 +108,7 @@ namespace SalesManProblem.ViewModels
                 crossoverPercentage / 100D,
                 mutationPercentage / 100D,
                 elitismPercentage / 100D,
-                roundsPerIteration
+                numberOfGenerationsPerIeration
                 );
             var choices = new GNAChoices(SelectedFitnessChoice, SelectedElitismChoice, SelectedSelectionChoice, SelectedCrossOverChoice, SelectedMutaionChoice);
             GNAlgorithm algorithm = new GNAlgorithm(choices, options);
@@ -142,7 +152,7 @@ Path-----------------------:
                 {
                     int x = centerX + (int)(Math.Cos(i * step) * radius);
                     int y = centerY + (int)(Math.Sin(i * step) * radius);
-                    return new City($"{i + 1}", new System.Drawing.Point(x, y));
+                    return City.Create($"{i + 1}", new System.Drawing.Point(x, y));
                 }).ToList();
             Cities = points;
             WeakReferenceMessenger.Default.Send(points);
@@ -159,7 +169,7 @@ Path-----------------------:
         {
             return RandomGenerator.RandomSequence(citiesCount, 10, mapWidth, 20)
                 .Zip(RandomGenerator.RandomSequence(citiesCount, 10, mapHeight, 20))
-                .Select((pair, i) => new City($"{i + 1}", new System.Drawing.Point(pair.First, pair.Second)))
+                .Select((pair, i) => City.Create($"{i + 1}", new System.Drawing.Point(pair.First, pair.Second)))
                 .ToList();
         }
 

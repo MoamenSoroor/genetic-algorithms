@@ -11,91 +11,9 @@ using System.Threading.Tasks;
 namespace SalesManProblem.Algorithms.Algorithms.GNA
 {
 
-    #region ProducerConsumerRandomizerGenerator
+  
 
-    //public class ProducerConsumerRandomizerGenerator : IDisposable
-    //{
-    //    private static readonly int MaxCount = Environment.ProcessorCount * 3;
-
-    //    // lock for the producer function
-    //    private static readonly object producerLock = new object();
-
-
-
-    //    //private readonly ReaderWriterLockSlim cacheLock = new ReaderWriterLockSlim();
-    //    private readonly CountdownEvent cde = new CountdownEvent(MaxCount);
-    //    private readonly BlockingCollection<double> queue = new BlockingCollection<double>();
-    //    private readonly Random random = new Random();
-
-    //    public ProducerConsumerRandomizerGenerator()
-    //    {
-
-    //        Produce();
-    //    }
-
-    //    private void Produce()
-    //    {
-    //        Task.Run(() =>
-    //        {
-    //            lock (producerLock)
-    //            {
-    //                while (true)
-    //                {
-
-    //                    cde.Wait();
-    //                    foreach (var item in Enumerable.Range(0, MaxCount))
-    //                        queue.Add(random.NextDouble());
-    //                    cde.Reset();
-
-    //                }
-    //            }
-    //        });
-
-
-
-    //        //var disposable = Observable..Create(observer =>
-    //        //{
-    //        //    observer.OnNext();
-    //        //});
-
-    //    }
-
-
-
-    //    public void Dispose()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public virtual int Next()
-    //    {
-    //        return (int)(NextDouble() * int.MaxValue);
-
-    //    }
-    //    public virtual int Next(int maxValue)
-    //    {
-    //        return (int)(NextDouble() * maxValue);
-    //    }
-    //    public virtual int Next(int minValue, int maxValue)
-    //    {
-    //        return (int)(NextDouble() * (maxValue - minValue) + minValue);
-    //    }
-
-    //    public virtual double NextDouble()
-    //    {
-    //        cde.Signal();
-    //        return queue.Take();
-
-    //    }
-
-
-
-    //}
-
-    #endregion
-
-
-
+    [Obsolete("Not used due to it's bad randomization and it is also not thread safe")]
     public class Randomizer
     {
         private static readonly ThreadLocal<Random> localRandom = 
@@ -241,6 +159,104 @@ namespace SalesManProblem.Algorithms.Algorithms.GNA
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #region ProducerConsumerRandomizerGenerator
+
+    //public class ProducerConsumerRandomizerGenerator : IDisposable
+    //{
+    //    private static readonly int MaxCount = Environment.ProcessorCount * 3;
+
+    //    // lock for the producer function
+    //    private static readonly object producerLock = new object();
+
+
+
+    //    //private readonly ReaderWriterLockSlim cacheLock = new ReaderWriterLockSlim();
+    //    private readonly CountdownEvent cde = new CountdownEvent(MaxCount);
+    //    private readonly BlockingCollection<double> queue = new BlockingCollection<double>();
+    //    private readonly Random random = new Random();
+
+    //    public ProducerConsumerRandomizerGenerator()
+    //    {
+
+    //        Produce();
+    //    }
+
+    //    private void Produce()
+    //    {
+    //        Task.Run(() =>
+    //        {
+    //            lock (producerLock)
+    //            {
+    //                while (true)
+    //                {
+
+    //                    cde.Wait();
+    //                    foreach (var item in Enumerable.Range(0, MaxCount))
+    //                        queue.Add(random.NextDouble());
+    //                    cde.Reset();
+
+    //                }
+    //            }
+    //        });
+
+
+
+    //        //var disposable = Observable..Create(observer =>
+    //        //{
+    //        //    observer.OnNext();
+    //        //});
+
+    //    }
+
+
+
+    //    public void Dispose()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public virtual int Next()
+    //    {
+    //        return (int)(NextDouble() * int.MaxValue);
+
+    //    }
+    //    public virtual int Next(int maxValue)
+    //    {
+    //        return (int)(NextDouble() * maxValue);
+    //    }
+    //    public virtual int Next(int minValue, int maxValue)
+    //    {
+    //        return (int)(NextDouble() * (maxValue - minValue) + minValue);
+    //    }
+
+    //    public virtual double NextDouble()
+    //    {
+    //        cde.Signal();
+    //        return queue.Take();
+
+    //    }
+
+
+
+    //}
+
+    #endregion
 
 
 }

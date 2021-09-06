@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleExample", "SimpleExample\SimpleExample.csproj", "{740649FD-E59E-45E0-B811-3A681E4D954A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManProblem", "SalesManProblem\SalesManProblem.csproj", "{F60BB2AC-0F24-40F0-B178-00FE717EAB65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManProblem.UI", "SalesManProblem\SalesManProblem.UI.csproj", "{F60BB2AC-0F24-40F0-B178-00FE717EAB65}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManProblem.Algorithms", "SalesManProblem.Algorithms\SalesManProblem.Algorithms.csproj", "{E85804BF-FB19-42BE-B4E2-E203C10C3CE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesManProblem.Tests", "SalesManProblem.Tests\SalesManProblem.Tests.csproj", "{D1C614A6-6319-4669-867A-7F8BAA4C4FC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesManProblem.Tests", "SalesManProblem.Tests\SalesManProblem.Tests.csproj", "{D1C614A6-6319-4669-867A-7F8BAA4C4FC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,6 +6,10 @@ using System.Security.Cryptography;
 
 namespace SalesManProblem.Algorithms.Algorithms.GNA
 {
+
+    /// <summary>
+    /// a strong and thread safe randomizer that is used inside algorithm.
+    /// </summary>
     public class RandomGenerator
     {
 

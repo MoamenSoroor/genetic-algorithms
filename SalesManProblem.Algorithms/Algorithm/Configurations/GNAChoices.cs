@@ -1,41 +1,11 @@
-﻿namespace SalesManProblem.Algorithms.GNA
+﻿using SalesManProblem.Algorithms.GNA;
+
+namespace SalesManProblem.Algorithms.Configurations
 {
 
-
-    public enum InitGenerationChoice
-    {
-        Default
-    }
-
-
-    public enum FitnessChoice
-    {
-        Default,
-        Fitness2
-    }
-
-    public enum ElitismChoice
-    {
-        Default
-    }
-
-    public enum SelectionChoice
-    {
-        Default, // RouletteWheelSelection
-        RandomSelection
-    }
-
-    public enum CrossOverChoice
-    {
-        Default
-    }
-
-    public enum MutationChoice
-    {
-        Default
-    }
-
-
+    /// <summary>
+    /// type used to pass GNA Configuration Choices to the <see cref="GNAConfigurations.Configure"/>
+    /// </summary>
     public class GNAChoices
     {
         public GNAChoices(FitnessChoice fitnessChoice, ElitismChoice elitismChoice, SelectionChoice selectionChoice, CrossOverChoice crossoverChoice, MutationChoice mutationChoice)

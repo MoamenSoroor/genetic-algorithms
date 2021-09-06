@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SalesManProblem.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas x:Name="Map" Background="#FFE5E5E5" >
+    <Canvas x:Name="Map" Background="#FFE5E5E5" ClipToBounds="True" >
         <TextBlock>Salesman Map</TextBlock>
     </Canvas>
 </UserControl>

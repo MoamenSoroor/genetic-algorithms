@@ -6,6 +6,7 @@
         xmlns:views="clr-namespace:SalesManProblem.Views"
         xmlns:local="clr-namespace:SalesManProblem"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="SalesManProblem.MainWindow"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -13,13 +14,19 @@
         TextElement.FontSize="14"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
+
+    WindowState="Maximized"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Travelling Salesman Problem" 
         Height="689" 
         Width="800"
-    DataContext="{Binding Path=MainWindowVM,Source={StaticResource locator}}"  
-    >
+    DataContext="{Binding Path=MainWindowVM,Source={StaticResource locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -59,10 +66,10 @@
                                         <TextBox x:Name="textBlock1" MinWidth="80" MaxWidth="80" Text="{Binding Value, ElementName=IterationsCount}" Padding="8,0,4,4" Background="#FFFFFDFD" Margin="3,0,0,0"/>
                                     </StackPanel>
 
-                                    <TextBlock x:Name="headerText_Copy1" Text="Rounds Per Iteration" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
+                                    <TextBlock x:Name="headerText_Copy1" Text="Generations Per Iteration" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
                                     <StackPanel Orientation="Horizontal">
-                                        <Slider x:Name="RoundsPerIteration" Minimum="10" Maximum="9999999" Value="{Binding RoundsPerIteration}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
-                                        <TextBox x:Name="textBlock2" MinWidth="80" MaxWidth="80" Text="{Binding Value, ElementName=RoundsPerIteration}" Padding="8,0,4,4" Background="#FFFFFDFD" Margin="3,0,0,0"/>
+                                        <Slider x:Name="RoundsPerIteration" Minimum="10" Maximum="9999999" Value="{Binding NumberOfGenerationsPerIeration}" MinWidth="180" IsSnapToTickEnabled="True" TickPlacement="None"/>
+                                        <TextBox x:Name="textBlock2" MinWidth="80" MaxWidth="80" Text="{Binding Value, ElementName=NumberOfGenerationsPerIeration}" Padding="8,0,4,4" Background="#FFFFFDFD" Margin="3,0,0,0"/>
                                     </StackPanel>
 
                                     <TextBlock Text="Population Size" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
@@ -103,7 +110,7 @@
                         <StackPanel Height="516" Width="278">
                             <GroupBox x:Name="groupBox3" Header="Configure Genetic Algorithm" FontSize="16">
                                 <StackPanel>
-                                    <TextBlock x:Name="headerText_Copy2" Text="Init GNA Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
+                                    <TextBlock x:Name="headerText_Copy2" Text="Init GNA Configurations(Not Used)" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
                                     <ComboBox Background="WhiteSmoke" SelectedItem="{Binding SelectedInitGenerationChoice}"  ItemsSource="{Binding InitGNAConfigurations}" IsReadOnly="True" Margin="0,3,0,10" Padding="0,4,5,4" />
 
                                     <TextBlock x:Name="FitnessConfig" Text="Fitness Configurations" TextWrapping="Wrap" FontSize="16" Padding="0,0,0,5" />
@@ -129,28 +136,6 @@
                 </TabItem>
             </TabControl>
             <GroupBox  x:Name="MapContainer"  Margin="3" Padding="3" Header="Results" FontSize="16" Background="#FFE3E4CB" >
-                <!--<Canvas x:Name="Map" Background="#FFE5E5E5" >
-                    <Ellipse Width="10" 
-                             Height="10" 
-                             Canvas.Left="100"
-                             Canvas.Top="100"
-                             Fill="Green"
-                             ></Ellipse>
-                    <Ellipse Width="10" 
-                             Height="10" 
-                             Canvas.Left="200"
-                             Canvas.Top="100"
-                             Fill="Red"
-                             ></Ellipse>
-                    <Polygon  Points="100 100,200 100,150,150"  
-                              Stroke="Blue"
-                              StrokeDashCap="Round"
-                              StrokeEndLineCap="Round"
-                              StrokeThickness="3">
-
-                    </Polygon>
-                    
-                </Canvas>-->
                 <TabControl x:Name="tabControl1" mah:HeaderedControlHelper.HeaderFontSize="14" FontFamily="Bahnschrift">
                     <TabItem Header="Citites Map" Padding="10,4,10,4">
                         <views:MapCanvas x:Name="Map" Margin="3,3,3,3"/>

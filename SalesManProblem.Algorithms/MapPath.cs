@@ -10,8 +10,28 @@ using System.Threading.Tasks;
 namespace SalesManProblem.Algorithms
 {
 
+    /// <summary>
+    /// MapPath is Immutable Type that represents a valid path on the map. 
+    /// It encapsulates ImmutableList of System.Drawing.Point that each one 
+    /// of that points represent City Location (x,y)
+    /// </summary>
     public class MapPath
     {
+
+
+
+        /// <summary>
+        /// this method is used to calculate the path length
+        /// </summary>
+        /// <returns>returns the length of the MapPath</returns>
+        public static double CalculatePathLength(MapPath path)
+        {
+
+            var len = Enumerable.Zip(path.positions, path.positions.Skip(1).Append(path.positions.First()))
+                .Sum((pos) => Geometry.Distance(pos.First, pos.Second));
+            return len;
+        }
+
 
         /// <summary>
         /// create map path from another one (shallow copy)
@@ -27,7 +47,6 @@ namespace SalesManProblem.Algorithms
         /// create random path from the cities on the map (deep copy)
         /// </summary>
         /// <param name="map">the map that has the city positions</param>
-        /// <param name="randomizer">the randomizer that is used to generate random path</param>
         /// <returns>new path with random positions</returns>
         public static MapPath CreateRandom(Map map)
         {
@@ -39,7 +58,7 @@ namespace SalesManProblem.Algorithms
         }
 
         /// <summary>
-        /// create path from city positions directly with out map (deep copy)
+        /// create path from city positions directly without map (deep copy)
         /// </summary>
         /// <param name="positions"></param>
         /// <returns></returns>
@@ -49,13 +68,15 @@ namespace SalesManProblem.Algorithms
         }
 
         /// <summary>
-        /// create new path after applying swaps on the city positions (deep copy)
+        /// create new path after applying swaps on the city positions (deep copy).
+        /// It used by Crossover Process
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="swaps"></param>
-        /// <returns></returns>
+        /// <param name="path">the old MapPath that will be used to generate new one</param>
+        /// <param name="swaps">swaps that will be applied to the new MapPath</param>
+        /// <returns>new MapPath from the previous</returns>
         public static MapPath Create(MapPath path, ImmutableList<(int Index, int NewIndex)> swaps)
         {
+            // using list because ImmutableList indexer is O(log n) not O(1)
             var list = new List<Point>(path.Positions);
 
             swaps.ForEach(pair =>
@@ -65,11 +86,12 @@ namespace SalesManProblem.Algorithms
                 list[pair.NewIndex] = temp;
             });
 
-            return MapPath.Create(MapPath.Create(list.ToImmutableList()));
+            return MapPath.Create(list.ToImmutableList());
         }
 
         /// <summary>
-        /// create new map path after applying swap on two positions (deep copy)
+        /// create new map path after applying swap on two positions (deep copy).
+        /// It used by Crossover Process
         /// </summary>
         /// <param name="path"></param>
         /// <param name="index"></param>
@@ -81,7 +103,7 @@ namespace SalesManProblem.Algorithms
             var temp = list[index];
             list[index] = list[newIndex];
             list[newIndex] = temp;
-            return MapPath.Create(MapPath.Create(list.ToImmutableList()));
+            return MapPath.Create(list.ToImmutableList());
         }
 
 
@@ -95,23 +117,28 @@ namespace SalesManProblem.Algorithms
         private MapPath(ImmutableList<Point> positions)
         {
             this.positions = positions;
-            this.pathLength = CalculatePathLength();
+            this.pathLength = CalculatePathLength(this);
         }
 
         private ImmutableList<Point> positions;
         private double pathLength;
 
+        /// <summary>
+        /// path length that is calculated on the constructor of the MapPath.
+        /// </summary>
         public double PathLength { get => pathLength; }
+
+        /// <summary>
+        /// the Number of Cities on the Path
+        /// </summary>
         public int CityCount { get => positions.Count; }
+
+        /// <summary>
+        /// The Cities Positions on the Path
+        /// </summary>
         public ImmutableList<Point> Positions { get => positions; }
 
-        private double CalculatePathLength()
-        {
 
-            var len = Enumerable.Zip(positions, positions.Skip(1).Append(positions.First()))
-                .Sum((pos) => Geometry.Distance(pos.First, pos.Second));
-            return len;
-        }
 
         public override bool Equals(object obj)
         {
@@ -126,24 +153,6 @@ namespace SalesManProblem.Algorithms
         {
             return positions.GetHashCode();
         }
-
-        //public MapPath Replace(int index, Point position)
-        //{
-
-        //    var newPositions = positions.Select((v, i) => i == index ? position : v).ToImmutableList();
-        //    return new MapPath(newPositions);
-        //}
-        //public MapPath Swap(int index1, int index2)
-        //{
-        //    var point1 = positions[index1];
-        //    var point2 = positions[index2];
-
-        //    var newPositions = positions.Select((value, i) => 
-        //        i == index1 ? 
-        //            point2 : i == index2 ?
-        //                point1 : value).ToImmutableList();
-        //    return new MapPath(newPositions);
-        //}
 
     }
 

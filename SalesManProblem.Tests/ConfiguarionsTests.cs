@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SalesManProblem.Algorithms;
+using SalesManProblem.Algorithms.Configurations;
 using SalesManProblem.Algorithms.GNA;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,10 @@ namespace SalesManProblem.Tests
         }
 
         public static Map map = Map.Create(new[] {
-            new City("c1",new Point(20,30)),
-        new City("c2",new Point(50,10)),
-        new City("c3",new Point(70,20)),
-        new City("c4",new Point(20,100)),
+            City.Create("c1",new Point(20,30)),
+            City.Create("c3",new Point(70,20)),
+            City.Create("c2",new Point(50,10)),
+            City.Create("c4",new Point(20,100)),
         });
 
         public static List<Point> cities = map.GetAllPositions().ToList();
@@ -86,7 +87,7 @@ namespace SalesManProblem.Tests
              };
 
             // act 
-            var result = GNAConfigurations.GenerateNewCandidates(list, options,selection);
+            var result = GNAConfigurations.SelectFromParents(list, options,selection);
 
 
             // assert

@@ -1,5 +1,11 @@
 ﻿namespace SalesManProblem.Algorithms.GNA
 {
+
+    /// <summary>
+    /// Candidate is Immutable type that represents One Chromosome in Genetic Algorithm. 
+    /// It encapsulates MapPath and it's fitness that will be calculated after Fitness 
+    /// Process. fitness value by default equals 0.
+    /// </summary>
     public class Candidate
     {
         /// <summary>
@@ -13,7 +19,7 @@
         }
 
         /// <summary>
-        /// create candidate from a path (shallow copy) with new fitness value
+        /// create new candidate from a path (shallow copy) with new fitness value.
         /// </summary>
         /// <param name="path"></param>
         /// <returns>new candidate (shallow copy)</returns>
@@ -23,10 +29,21 @@
         }
 
 
-        private double fitness;
+
+        private readonly double fitness;
+
         private readonly MapPath path;
 
-        public MapPath Path => path; 
+        /// <summary>
+        /// fitness value of the candidate
+        /// </summary>
+        public MapPath Path => path;
+
+
+
+        /// <summary>
+        /// cities path of the candidate
+        /// </summary>
         public double Fitness { get => fitness; }
 
 
@@ -47,29 +64,7 @@
             return path.GetHashCode();
         }
 
-        //public Candidate ApplySwaps(ImmutableList<(int Index, int NewIndex)> firstSwaps)
-        //{
-        //    var list = new List<Point>(this.path.Positions);
-
-        //    firstSwaps.ForEach(pair =>
-        //    {
-        //        var temp = list[pair.Index];
-        //        list[pair.Index] = list[pair.NewIndex];
-        //        list[pair.NewIndex] = temp;
-        //    });
-
-        //    return Candidate.Create(MapPath.Create(list.ToImmutableList()));
-        //}
-
-        //public Candidate ApplySwap(int index, int newIndex)
-        //{
-        //    var list = new List<Point>(this.path.Positions);
-        //    var temp = list[index];
-        //    list[index] = list[newIndex];
-        //    list[newIndex] = temp;
-        //    return Candidate.Create(MapPath.Create(list.ToImmutableList()));
-        //}
-
+        
 
     }
 
