@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SalesManProblem.Algorithms\SalesManProblem.Algorithms.csproj" />
+    <ProjectReference Include="..\SalesManProblem.Algorithms\SalesManProblem.Algorithm.csproj" />
   </ItemGroup>
 
 </Project>
