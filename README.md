@@ -3,7 +3,7 @@ Genetic algorithms exploration.
 
 Applying Functional Progamming Prinicples, Parallel Progamming on Genetic Algorithm
 
-Declartive Code call Starts at GNAlgorithm class at [GNAlgorithm.cs](SalesManProblem.Algorithms/Algorithm/GNA/GNAlgorithm.cs)
+Declartive Code call Starts at GNAlgorithm class at [GNAlgorithm.cs](SalesManProblem.Algorithms/Algorithm/GNA/GNAlgorithm.cs) file
 
 * Configure the algorithm with the user choices:
   inside the Configure Method, I build the different algorithm parts via composition
@@ -29,7 +29,12 @@ public GNAResult Execute(Map map)
 }
 ```
 
-* You can find the declarive configuration code at [GNAConfigurations.cs](SalesManProblem.Algorithms/Algorithm/GNA/GNAConfigurations.cs)
+* You can find the declarive configuration code at [GNAConfigurations.cs](SalesManProblem.Algorithms/Algorithm/GNA/GNAConfigurations.cs) file
+
+* user can configure the algorithm from the choices at the advanced panel at the right of the UI (crossover, fitness calculation, selection, ... etc). user selection will reflect in the configure function by composing different pure function based on ui selection:
+![alt text](https://github.com/MoamenSoroor/genetic-algorithms/blob/master/Screenshots/Screenshot%202021-12-25%20143619.png)
+
+* Screenshots of solving salesman problem with Genetic algorithm:
 
 ![alt text](https://github.com/MoamenSoroor/genetic-algorithms/blob/master/Screenshots/Screenshot%20(2885).png)
 
