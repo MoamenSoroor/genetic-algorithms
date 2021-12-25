@@ -34,7 +34,8 @@ public GNAResult Execute(Map map)
 * user can configure the algorithm from the choices at the advanced panel at the right of the UI (crossover, fitness calculation, selection, ... etc). user selection will reflect in the configure function by composing different pure function based on ui selection:
 ![alt text](https://github.com/MoamenSoroor/genetic-algorithms/blob/master/Screenshots/Screenshot%202021-12-25%20143619.png)
 
-* Screenshots of solving salesman problem with Genetic algorithm: 
+* Screenshots of solving salesman problem with Genetic algorithm:
+
 ![alt text](https://github.com/MoamenSoroor/genetic-algorithms/blob/master/Screenshots/Screenshot%20(2885).png)
 
 ![alt text](https://github.com/MoamenSoroor/genetic-algorithms/blob/master/Screenshots/Screenshot%20(2895).png)
