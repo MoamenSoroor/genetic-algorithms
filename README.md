@@ -3,7 +3,7 @@ Genetic algorithms exploration.
 
 Applying Functional Progamming Prinicples, Parallel Progamming on Genetic Algorithm
 
-Declartive Code call Starts at GNAlgorithm class at (SalesManProblem.Algorithms/Algorithm/GNA/GNAlgorithm.cs)
+Declartive Code call Starts at GNAlgorithm class at [call of declaritive part](SalesManProblem.Algorithms/Algorithm/GNA/GNAlgorithm.cs)
 
 * Configure the algorithm with the user choices:
   inside the Configure Method, I build the different algorithm parts via composition
