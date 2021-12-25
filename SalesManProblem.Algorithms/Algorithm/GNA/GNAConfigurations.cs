@@ -73,35 +73,6 @@ namespace SalesManProblem.Algorithms.GNA
             };
         }
 
-
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="options"></param>
-        ///// <param name="initialGeneration"></param>
-        ///// <param name="nextGenerationPath"></param>
-        ///// <returns></returns>
-        //public static GNAIterationResult ConfigureIteration(GNAOptions options, Func<Generation> initialGeneration, Func<Generation, Generation> nextGenerationPath)
-        //{
-
-        //    Stopwatch watch = Stopwatch.StartNew();
-        //    var gen = initialGeneration();
-
-        //    foreach (var item in Enumerable.Range(0, options.PopulationSize))
-        //        gen = nextGenerationPath(gen);
-
-
-        //    watch.Stop();
-        //    return new GNAIterationResult(gen.BestPath, watch.Elapsed);
-        //}
-
-
-
-
-
-
-
         /// <summary>
         /// a Higher Order Function that configures a Function that can be used to 
         /// pass a generation <see cref="Generation"/> and get a new one.

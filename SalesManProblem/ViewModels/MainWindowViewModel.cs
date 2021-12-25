@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SalesManProblem.ViewModels
@@ -103,25 +104,32 @@ namespace SalesManProblem.ViewModels
 
         private async Task RunAlgorithmAsync()
         {
-            var options = new GNAOptions(iterations,
-                populationSize,
-                crossoverPercentage / 100D,
-                mutationPercentage / 100D,
-                elitismPercentage / 100D,
-                numberOfGenerationsPerIeration
-                );
-            var choices = new GNAChoices(SelectedFitnessChoice, SelectedElitismChoice, SelectedSelectionChoice, SelectedCrossOverChoice, SelectedMutaionChoice);
-            GNAlgorithm algorithm = new GNAlgorithm(choices, options);
-            AvgPathLengthString = $"wait ...";
-            PathLengthString = $"";
-            var results = await Task.Run(() => algorithm.Execute(Map.Create(Cities)));
-            AvgPathLengthString = $"Avg Path Length: {results.AveragePathLength}";
-            PathLengthString = $"Best Path Length: {(int)results.MapPath.PathLength}";
+            try
+            {
+                var options = new GNAOptions(iterations,
+                        populationSize,
+                        crossoverPercentage / 100D,
+                        mutationPercentage / 100D,
+                        elitismPercentage / 100D,
+                        numberOfGenerationsPerIeration
+                        );
+                var choices = new GNAChoices(SelectedFitnessChoice, SelectedElitismChoice, SelectedSelectionChoice, SelectedCrossOverChoice, SelectedMutaionChoice);
+                GNAlgorithm algorithm = new GNAlgorithm(choices, options);
+                AvgPathLengthString = $"wait ...";
+                PathLengthString = $"";
+                var results = await Task.Run(() => algorithm.Execute(Map.Create(Cities)));
+                AvgPathLengthString = $"Avg Path Length: {results.AveragePathLength}";
+                PathLengthString = $"Best Path Length: {(int)results.MapPath.PathLength}";
 
-  
-            LogInfo(results);
 
-            WeakReferenceMessenger.Default.Send(results.MapPath);
+                LogInfo(results);
+
+                WeakReferenceMessenger.Default.Send(results.MapPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
 
         }
 
