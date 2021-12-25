@@ -29,7 +29,7 @@ public GNAResult Execute(Map map)
 }
 ```
 
-
+* You can find the declarive configuration code at [GNAConfigurations.cs](SalesManProblem.Algorithms/Algorithm/GNA/GNAConfigurations.cs)
 
 ![alt text](https://github.com/MoamenSoroor/genetic-algorithms/blob/master/Screenshots/Screenshot%20(2885).png)
 
